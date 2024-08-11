@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yyh.restaurant.dao.StapleDao">
+    <select id="getStapleByMassage" resultType="com.yyh.restaurant.bean.Staple">
+        select *
+        from staple
+        where staplename = #{staplename}
+
+
+    </select>
+    <select id="getAllStaple" resultType="com.yyh.restaurant.bean.Staple">
+        SELECT * FROM staple
+        <if test="staplename !=null ">
+            WHERE staplename like #{staplename}
+        </if>
+        LIMIT #{pageStart},#{pageSize}
+    </select>
+
+    <select id="getStapleCounts" resultType="java.lang.Integer">
+        SELECT count(*) FROM `staple`
+        <if test="staplename !=null ">
+            WHERE staplename like #{staplename}
+        </if>
+    </select>
+
+
+
+    <insert id="addStaple">
+        insert into staple
+            (staplename, price,popularity)
+            value ( #{staplename},#{price},#{popularity}
+            )
+    </insert>
+
+    <delete id="deleteStaple">
+        delete from staple where id=#{id}
+    </delete>
+
+    <select id="getUpdateStaple" resultType="com.yyh.restaurant.bean.Staple">
+        select * from staple where id=#{id}
+
+    </select>
+
+    <update id="editStaple">
+        update staple set staplename=#{staplename},price=#{price},
+                          popularity=#{popularity} where id =#{id}
+    </update>
+</mapper>
+

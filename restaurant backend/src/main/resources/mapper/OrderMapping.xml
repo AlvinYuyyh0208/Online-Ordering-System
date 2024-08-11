@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yyh.restaurant.dao.OrderDao">
+    <select id="getOrderByMassage" resultType="com.yyh.restaurant.bean.Order">
+        select *
+        from `order`
+        where ordername = #{ordername}
+    </select>
+    <select id="getAllOrder" resultType="com.yyh.restaurant.bean.Order">
+        SELECT * FROM `order`
+        <if test="ordername !=null ">
+            WHERE ordername like #{ordername}
+        </if>
+        LIMIT #{pageStart},#{pageSize}
+    </select>
+
+    <select id="getOrderCounts" resultType="java.lang.Integer">
+        SELECT count(*) FROM `order`
+        <if test="ordername !=null ">
+            WHERE ordername like #{ordername}
+        </if>
+
+    </select>
+
+    <update id="updateState">
+        update `order`
+        set state =#{state}
+        where id = #{id}
+    </update>
+
+    <insert id="addOrder">
+        insert into `order`
+            (ordername,num,user,time,note,state,price)
+            value ( #{ordername},#{num},#{user},#{time},#{note},#{state},#{price}
+            )
+    </insert>
+
+    <delete id="deleteOrder">
+        delete from `order` where id=#{id}
+    </delete>
+
+    <select id="getUpdateOrder" resultType="com.yyh.restaurant.bean.Order">
+        select * from `order` where id=#{id}
+
+    </select>
+
+    <update id="editOrder">
+        update `order` set ordername=#{ordername}, num=#{num},
+                         user=#{user},time=#{time},note=#{note},price=#{price}
+                           where id=#{id}
+
+
+    </update>
+</mapper>
+

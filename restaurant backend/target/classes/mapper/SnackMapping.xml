@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yyh.restaurant.dao.SnackDao">
+    <select id="getSnackByMassage" resultType="com.yyh.restaurant.bean.Snack">
+        select *
+        from snack
+        where snackname = #{snackname}
+
+
+    </select>
+    <select id="getAllSnack" resultType="com.yyh.restaurant.bean.Snack">
+        SELECT * FROM snack
+        <if test="snackname !=null ">
+            WHERE snackname like #{snackname}
+        </if>
+        LIMIT #{pageStart},#{pageSize}
+    </select>
+
+    <select id="getSnackCounts" resultType="java.lang.Integer">
+        SELECT count(*) FROM `snack`
+        <if test="snackname !=null ">
+            WHERE snackname like #{snackname}
+        </if>
+    </select>
+
+
+
+    <insert id="addSnack">
+        insert into snack
+            (snackname, price,popularity)
+            value ( #{snackname},#{price},#{popularity}
+            )
+    </insert>
+
+    <delete id="deleteSnack">
+        delete from snack where id=#{id}
+    </delete>
+
+    <select id="getUpdateSnack" resultType="com.yyh.restaurant.bean.Snack">
+        select * from snack where id=#{id}
+
+    </select>
+
+    <update id="editSnack">
+        update snack set snackname=#{snackname},price=#{price},
+                          popularity=#{popularity} where id =#{id}
+    </update>
+</mapper>
+

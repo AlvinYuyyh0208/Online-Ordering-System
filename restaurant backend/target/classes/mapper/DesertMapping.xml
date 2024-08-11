@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yyh.restaurant.dao.DesertDao">
+    <select id="getDesertByMassage" resultType="com.yyh.restaurant.bean.Desert">
+        select *
+        from desert
+        where desertname = #{desertname}
+
+
+    </select>
+    <select id="getAllDesert" resultType="com.yyh.restaurant.bean.Desert">
+        SELECT * FROM desert
+        <if test="desertname !=null ">
+            WHERE desertname like #{desertname}
+        </if>
+        LIMIT #{pageStart},#{pageSize}
+    </select>
+
+    <select id="getDesertCounts" resultType="java.lang.Integer">
+        SELECT count(*) FROM `desert`
+        <if test="desertname !=null ">
+            WHERE desertname like #{desertname}
+        </if>
+    </select>
+    
+
+
+    <insert id="addDesert">
+        insert into desert
+            (desertname, price,popularity)
+            value ( #{desertname},#{price},#{popularity}
+            )
+    </insert>
+
+    <delete id="deleteDesert">
+        delete from desert where id=#{id}
+    </delete>
+
+    <select id="getUpdateDesert" resultType="com.yyh.restaurant.bean.Desert">
+        select * from desert where id=#{id}
+
+    </select>
+
+    <update id="editDesert">
+        update desert set desertname=#{desertname},price=#{price},
+                        popularity=#{popularity} where id =#{id}
+    </update>
+</mapper>
+
